@@ -62,3 +62,28 @@
 .levelLink:visited {
   color: #0080c1;
 }
+
+.lightMode {
+  display: inline-block;
+}
+.labelMode {
+  color: #004980;
+  text-align: center;
+  font-family: StratosSkyeng;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 48px;
+}
+.inputMode {
+  //appearance: none;
+  width: 20px;
+  height: 20px;
+
+  /* border-radius: 10px;
+  background: #fff;
+  box-shadow: inset 0 0 5px rgb(0 0 0 / 0.2);
+  border: 1px solid #FFFFFF; */
+
+  
+}

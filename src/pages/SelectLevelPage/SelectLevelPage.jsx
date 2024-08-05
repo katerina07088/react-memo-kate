@@ -26,8 +26,19 @@ export function SelectLevelPage() {
             </Link>
           </li>
         </ul>
-        <label htmlFor=""> Лёгкий режим </label>
-        <input type="checkbox" checked={isEasyMode} onChange={e => setEasyMode(e.target.checked)} />
+        <div className={styles.lightMode}>
+          <input
+            id="lightMode"
+            className={styles.inputMode}
+            type="checkbox"
+            checked={isEasyMode}
+            onChange={e => setEasyMode(e.target.checked)}
+          />
+          <label className={styles.labelMode} htmlFor="lightMode">
+            {" "}
+            Лёгкий режим{" "}
+          </label>
+        </div>
       </div>
     </div>
   );
