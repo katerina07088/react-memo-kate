@@ -4,6 +4,7 @@ import { Button } from "../Button/Button";
 
 import deadImageUrl from "./images/dead.png";
 import celebrationImageUrl from "./images/celebration.png";
+//import { Link } from "react-router-dom";
 
 export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick }) {
   const title = isWon ? "Вы победили!" : "Вы проиграли!";
