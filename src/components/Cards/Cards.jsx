@@ -126,14 +126,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       return false;
     });
 
-    // const nextCards = openCards.map(card => {
-    //   if (card.id == openCardsWithoutPair.id) {
-    //   return {
-    //     ...card,
-    //     open: false,
-    //   }}
-    // });
-
     // Игровое поле после открытия кликнутой карты
     const playerLost = openCardsWithoutPair.length >= 2;
 

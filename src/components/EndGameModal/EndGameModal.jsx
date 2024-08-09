@@ -23,11 +23,6 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
       </div>
 
       <Button onClick={onClick}>Начать сначала</Button>
-      {/* <button className={styles.buttonToMain}>
-        <Link className={styles.linkToMain} to="/">
-          Вернуться на главную
-        </Link>
-      </button> */}
     </div>
   );
 }

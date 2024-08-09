@@ -76,14 +76,6 @@
   line-height: 48px;
 }
 .inputMode {
-  //appearance: none;
-  width: 20px;
-  height: 20px;
-
-  /* border-radius: 10px;
-  background: #fff;
-  box-shadow: inset 0 0 5px rgb(0 0 0 / 0.2);
-  border: 1px solid #FFFFFF; */
-
-  
+    width: 20px;
+  height: 20px;  
 }

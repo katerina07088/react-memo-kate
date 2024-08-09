@@ -35,8 +35,7 @@ export function SelectLevelPage() {
             onChange={e => setEasyMode(e.target.checked)}
           />
           <label className={styles.labelMode} htmlFor="lightMode">
-            {" "}
-            Лёгкий режим{" "}
+            Лёгкий режим
           </label>
         </div>
       </div>
