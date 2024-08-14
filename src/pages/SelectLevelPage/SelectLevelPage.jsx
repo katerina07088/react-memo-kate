@@ -38,6 +38,9 @@ export function SelectLevelPage() {
             Лёгкий режим
           </label>
         </div>
+        <Link to="/leaderboard">
+          <div className={styles.leaderBoardLink}>Перейти к лидерборду</div>
+        </Link>
       </div>
     </div>
   );

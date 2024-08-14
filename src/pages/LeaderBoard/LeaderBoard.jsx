@@ -6,12 +6,12 @@ import { useState } from "react";
 
 export function LeaderBoard({ onClick }) {
   const [error, setError] = useState("");
-  const [leaders, setListOfLeaders] = useState([]);
+  const [leaders, setLeaders] = useState([]);
 
   useEffect(() => {
     getListOfLeaders()
       .then(res => {
-        setListOfLeaders(res.leaders);
+        setLeaders(res.leaders.sort((a, b) => (a.time > b.time ? 1 : -1)).slice(0, 10));
       })
       .catch(error => {
         setError(error.message);
