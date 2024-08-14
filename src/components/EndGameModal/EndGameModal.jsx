@@ -14,7 +14,7 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
   const nav = useNavigate();
   const thirdLevelPairs = 9;
   const isLeader = isWon && Number(pairsCount) === thirdLevelPairs;
-  const title = isLeader ? "Вы попали в лидерборд!" : isWon ? "Вы выйграли!" : "Вы проиграли!";
+  const title = isLeader ? "Вы попали на лидерборд!" : isWon ? "Вы выйграли!" : "Вы проиграли!";
 
   //const title = isWon ? "Вы выйграли!" : "Вы проиграли!";
 
@@ -62,7 +62,7 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
       <div className={styles.time}>
         {gameDurationMinutes.toString().padStart("2", "0")}.{gameDurationSeconds.toString().padStart("2", "0")}
       </div>
-      <Button onClick={onClick}>Начать сначала</Button>
+      <Button onClick={onClick}>Играть снова</Button>
       {isLeader ? (
         <Link to="/leaderboard">
           <button onClick={addLeaderToList} className={styles.btnLeaderBoard} type="submit">
