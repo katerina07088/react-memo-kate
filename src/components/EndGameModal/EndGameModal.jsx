@@ -23,7 +23,7 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
   const imgAlt = isWon ? "celebration emodji" : "dead emodji";
   const [leader, setAddLeader] = useState({
     name: "",
-    time: gameDurationSeconds.toString().padStart("2", "0"),
+    time: gameDurationMinutes.toString().padStart("2", "0") + gameDurationSeconds.toString().padStart("2", "0"),
   });
 
   const addLeaderToList = async e => {
