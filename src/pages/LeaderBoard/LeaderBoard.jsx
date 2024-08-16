@@ -4,7 +4,7 @@ import { getListOfLeaders } from "../../api/api";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export function LeaderBoard({ onClick }) {
+export function LeaderBoard({ time }) {
   const [error, setError] = useState("");
   const [leaders, setLeaders] = useState([]);
 
@@ -36,7 +36,12 @@ export function LeaderBoard({ onClick }) {
             <li className={styles.leader} key={leader.id}>
               <div className={styles.leaderP}>{leader.id}</div>
               <div className={styles.leaderP}>{leader.name}</div>
-              <div className={styles.leaderP}>{leader.time}</div>
+              <div className={styles.leaderP}>
+                {Math.floor(leader.time / 60)
+                  .toString()
+                  .padStart("2", "0")}
+                :{leader.time - Math.floor(leader.time / 60) * (60).toString().padStart("2", "0")}
+              </div>
             </li>
           ))}
         </ul>

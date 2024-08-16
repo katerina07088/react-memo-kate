@@ -12,6 +12,7 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
   const { pairsCount } = useParams();
   const [error, setError] = useState();
   const nav = useNavigate();
+
   const thirdLevelPairs = 9;
   const isLeader = isWon && Number(pairsCount) === thirdLevelPairs;
   const title = isLeader ? "Вы попали на лидерборд!" : isWon ? "Вы выйграли!" : "Вы проиграли!";
@@ -21,9 +22,13 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
   const imgSrc = isWon ? celebrationImageUrl : deadImageUrl;
 
   const imgAlt = isWon ? "celebration emodji" : "dead emodji";
+  const time = `${gameDurationMinutes.toString().padStart("2", "0")}:${gameDurationSeconds
+    .toString()
+    .padStart("2", "0")}`;
+
   const [leader, setAddLeader] = useState({
     name: "",
-    time: gameDurationMinutes.toString().padStart("2", "0") + gameDurationSeconds.toString().padStart("2", "0"),
+    time: time,
   });
 
   const addLeaderToList = async e => {
@@ -59,9 +64,7 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
         </div>
       ) : null}
       <p className={styles.description}>Затраченное время:</p>
-      <div className={styles.time}>
-        {gameDurationMinutes.toString().padStart("2", "0")}.{gameDurationSeconds.toString().padStart("2", "0")}
-      </div>
+      <div className={styles.time}>{time}</div>
       <Button onClick={onClick}>Играть снова</Button>
       {isLeader ? (
         <Link to="/leaderboard">
