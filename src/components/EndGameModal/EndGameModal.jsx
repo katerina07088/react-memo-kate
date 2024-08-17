@@ -22,13 +22,10 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
   const imgSrc = isWon ? celebrationImageUrl : deadImageUrl;
 
   const imgAlt = isWon ? "celebration emodji" : "dead emodji";
-  const time = `${gameDurationMinutes.toString().padStart("2", "0")}:${gameDurationSeconds
-    .toString()
-    .padStart("2", "0")}`;
 
   const [leader, setAddLeader] = useState({
     name: "",
-    time: time,
+    time: gameDurationMinutes.toString().padStart("2", "0") + gameDurationSeconds.toString().padStart("2", "0"),
   });
 
   const addLeaderToList = async e => {
@@ -64,7 +61,9 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
         </div>
       ) : null}
       <p className={styles.description}>Затраченное время:</p>
-      <div className={styles.time}>{time}</div>
+      <div className={styles.time}>
+        {gameDurationMinutes.toString().padStart("2", "0")}: {gameDurationSeconds.toString().padStart("2", "0")}
+      </div>
       <Button onClick={onClick}>Играть снова</Button>
       {isLeader ? (
         <Link to="/leaderboard">
