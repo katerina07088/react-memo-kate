@@ -35,7 +35,7 @@ export function SelectLevelPage() {
             onChange={e => setEasyMode(e.target.checked)}
           />
           <label className={styles.labelMode} htmlFor="lightMode">
-            Лёгкий режим
+            Лёгкий режим (3 жизни)
           </label>
         </div>
         <Link to="/leaderboard">
