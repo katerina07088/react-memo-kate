@@ -35,7 +35,7 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
       return;
     }
     try {
-      await addLeader({ ...leader }).then(res => {
+      await addLeader().then(res => {
         setAddLeader(res.leaders);
         nav("/leaderBoard");
       });

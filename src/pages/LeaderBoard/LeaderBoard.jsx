@@ -4,7 +4,7 @@ import { getListOfLeaders } from "../../api/api";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export function LeaderBoard({ time }) {
+export function LeaderBoard() {
   const [error, setError] = useState("");
   const [leaders, setLeaders] = useState([]);
 
