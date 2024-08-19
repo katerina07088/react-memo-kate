@@ -46,6 +46,15 @@
 
   border-radius: 12px;
   background: #fff;
+  
+  color: #0080c1;
+  text-align: center;
+  font-family: StratosSkyeng;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 72px;
+  text-decoration: none;
 }
 
 .levelLink {
@@ -63,7 +72,7 @@
   color: #0080c1;
 }
 
-.leaderBoardLink{
+.leaderBoardLink {
   font-family: Arial;
   font-size: 18px;
   font-weight: 400;
@@ -74,64 +83,78 @@
   text-decoration: underline;
 }
 
-
-
- /* .inputMode:checked {
-  display:inline-block;
-  background-color: white;
-  border: none;
-} */
-.inputMode:checked:after {
-  /* content: '\2713';
-  color:green; */
+.lightMode {
+  margin-bottom: 38px;
 }
-.inputMode {
-  /* text-align: center;
-  width: 20px;
-  height: 20px;
-  background-color: white;
-  border-radius: 10%; */
- //display:none;
-}
- 
+
 .labelMode {
-color: #000000;
-font-family: Arial;
-font-style: normal;
-font-size: 24px;
-font-weight: 400;
-line-height: 32px;
-text-align: center;
-padding-left: 18px;
-
-
-display: inline-block;
-//width: 20px;
-height: 20px;
-//background: white;
+  color: #000000;
+  font-family: Arial;
+  font-style: normal;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  text-align: center;
+  padding-left: 18px;
+  display: inline-block;
+  height: 20px;
 }
 
 .labelMode::before {
-  content: '';
+  content: "";
   position: absolute;
   width: 20px;
   height: 20px;
   background: white;
-  left:653px;
-  top:455px;
+  left: 654px;
+  top: 414px;
 }
-.inputMode:checked + .labelMode::before { display: block; }
+.inputMode:checked + .labelMode::before {
+  display: block;
+}
 
 .labelMode::after {
-  content: '✔';
+  content: "✔";
   display: none;
-  color: #7AC100;
+  color: #7ac100;
   font-size: 18px;
   position: absolute;
-  left:655px;
-  top:449px; 
+  left: 656px;
+  top: 408px;
 }
-.inputMode:checked + .labelMode::after { display: block; }
+.inputMode:checked + .labelMode::after {
+  display: block;
+}
+.selectedLevel{
+border-color: blue;
+}
+.button {
+  width: 276px;
+  height: 45px;
+
+  border-radius: 12px;
+  background: #7ac100;
+
+  color: #fff;
+  text-align: center;
+  font-variant-numeric: lining-nums proportional-nums;
+
+  /* Pres → Caption S */
+  font-family: Arial;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px; /* 133.333% */
+
+  border: none;
+
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #7ac100cc;
+}
+
 
 /* @media (min-resolution: 144dpi) {
   .labelMode ::before {
