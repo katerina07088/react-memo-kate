@@ -99,7 +99,7 @@
   display: inline-block;
   height: 20px;
 }
-
+/* 
 .labelMode::before {
   content: "";
   position: absolute;
@@ -124,9 +124,11 @@
 }
 .inputMode:checked + .labelMode::after {
   display: block;
-}
-.selectedLevel{
-border-color: blue;
+} */
+
+.selectedLevel {
+ background-color: #87CEEB;
+ border-color:#4682B4;
 }
 .button {
   width: 276px;

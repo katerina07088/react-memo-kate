@@ -1,27 +1,34 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./SelectLevelPage.module.css";
 import { useContext } from "react";
 import { EasyContext } from "../../context/context";
-//import { useState } from "react";
+import { useState } from "react";
 
 export function SelectLevelPage() {
   const { isEasyMode, setEasyMode } = useContext(EasyContext);
-  //const [selectedLevel, setSelectedLevel] = useState();
+  const [selectedGame, setSelectedGame] = useState();
+  const nav = useNavigate();
+
+  const startGame = () => {
+    if (selectedGame !== null) {
+      nav(`/game/${selectedGame}`);
+    }
+  };
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
         <h1 className={styles.title}>Выбери сложность</h1>
         <ul className={styles.levels}>
-          {/* {[3, 6, 9].map(level => (
+          {[3, 6, 9].map(game => (
             <li
-              key={level}
-              className={`${styles.level} ${selectedLevel === level ? styles.selected : ""}`}
-              onClick={() => setSelectedLevel(level)}
+              key={game}
+              className={`${styles.level} ${selectedGame === game ? styles.selectedLevel : ""}`}
+              onClick={() => setSelectedGame(game)}
             >
-              {level / 3}
+              {game / 3}
             </li>
-          ))} */}
-          <li className={styles.level}>
+          ))}
+          {/* <li className={styles.level}>
             <Link className={styles.levelLink} to="/game/3">
               1
             </Link>
@@ -35,7 +42,7 @@ export function SelectLevelPage() {
             <Link className={styles.levelLink} to="/game/9">
               3
             </Link>
-          </li>
+          </li> */}
         </ul>
         <div className={styles.lightMode}>
           <input
@@ -49,9 +56,11 @@ export function SelectLevelPage() {
             Лёгкий режим (3 жизни)
           </label>
         </div>
-        {/* <div>
-          <button className={styles.button}>Играть</button>
-        </div> */}
+        <div>
+          <button className={styles.button} onClick={startGame}>
+            Играть
+          </button>
+        </div>
         <Link to="/leaderboard">
           <div className={styles.leaderBoardLink}>Перейти к лидерборду</div>
         </Link>
