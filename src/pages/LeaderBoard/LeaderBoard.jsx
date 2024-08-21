@@ -32,9 +32,9 @@ export function LeaderBoard() {
             <div className={styles.leaderPTtl}>Позиция</div> <div className={styles.leaderPTtl}>Пользователь</div>
             <div className={styles.leaderPTtl}>Время</div>
           </li>
-          {leaders.map(leader => (
+          {leaders.map((leader, index) => (
             <li className={styles.leader} key={leader.id}>
-              <div className={styles.leaderP}>{leader.id}</div>
+              <div className={styles.leaderP}># {index + 1}</div>
               <div className={styles.leaderP}>{leader.name}</div>
               <div className={styles.leaderP}>
                 {Math.floor(leader.time / 60)
