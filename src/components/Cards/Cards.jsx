@@ -6,6 +6,7 @@ import { EndGameModal } from "../../components/EndGameModal/EndGameModal";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
 import { EasyContext } from "../../context/context";
+import svg from "../../img/achiv.png";
 
 // Игра закончилась
 const STATUS_LOST = "STATUS_LOST";
@@ -212,6 +213,13 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </>
           )}
         </div>
+        {/* <div className={styles.containerSuperPower}>
+          <img className={styles.superPower} src={svg} alt="achives" />
+          <p className={styles.modalSuperPower}>
+            <span className={styles.superPoweP}>Прозрение</span>
+            На 5 секунд показываются все карты. Таймер длительности игры на это время останавливается.
+          </p>
+        </div> */}
         {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
         {isEasyMode && <span className={styles.quantityOfAttempsTtl}> Количество попыток: {attempts} </span>}
       </div>
@@ -238,6 +246,13 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           />
         </div>
       ) : null}
+      <div className={styles.containerSuperPower}>
+        <img className={styles.superPower} src={svg} alt="achives" />
+        <p className={styles.modalSuperPower}>
+          <span className={styles.superPoweP}>Прозрение</span>
+          На 5 секунд показываются все карты. Таймер длительности игры на это время останавливается.
+        </p>
+      </div>
     </div>
   );
 }
