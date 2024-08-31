@@ -247,7 +247,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
         </div>
       ) : null}
       <div className={styles.containerSuperPower}>
-        <img className={styles.superPower} src={svg} alt="achives" />
+        <img className={styles.superPower} src={svg} alt="achieves" />
         <p className={styles.modalSuperPower}>
           <span className={styles.superPoweP}>Прозрение</span>
           На 5 секунд показываются все карты. Таймер длительности игры на это время останавливается.

@@ -3,6 +3,10 @@ import styles from "./LeaderBoard.module.css";
 import { getListOfLeaders } from "../../api/api";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import hardGame from "../../img/hardGame.png";
+import noHardGame from "../../img/noHardGame.png";
+import superPower from "../../img/superPower.png";
+import noSuperPower from "../../img/noSuperPower.png";
 
 export function LeaderBoard() {
   const [error, setError] = useState("");
@@ -27,16 +31,25 @@ export function LeaderBoard() {
         </Link>
       </div>
       <div className={styles.leadersList}>
-        <ul className={styles.leaders}>
-          <li className={styles.leader}>
+        <div className={styles.leaders}>
+          <div className={styles.leaderTitle}>
             <div className={styles.leaderPTtl}>Позиция</div> <div className={styles.leaderPTtl}>Пользователь</div>
+            <div className={styles.leaderPTtl}>Достижения</div>
             <div className={styles.leaderPTtl}>Время</div>
-          </li>
+          </div>
           {leaders.map((leader, index) => (
             <li className={styles.leader} key={leader.id}>
-              <div className={styles.leaderP}># {index + 1}</div>
-              <div className={styles.leaderP}>{leader.name}</div>
-              <div className={styles.leaderP}>
+              <div className={styles.leaderPosition}># {index + 1}</div>
+              <div className={styles.leaderName}>{leader.name}</div>
+              <div className={styles.achives}>
+                <img src={superPower} alt="achieves" />
+                <img src={hardGame} alt="achieves" />
+              </div>
+              <div className={styles.noAchives}>
+                <img src={noSuperPower} alt="noachieves" />
+                <img src={noHardGame} alt="noachieves" />
+              </div>
+              <div className={styles.leaderTime}>
                 {Math.floor(leader.time / 60)
                   .toString()
                   .padStart("2", "0")}
@@ -44,7 +57,7 @@ export function LeaderBoard() {
               </div>
             </li>
           ))}
-        </ul>
+        </div>
         {error && <p> {error}</p>}
       </div>
     </div>
