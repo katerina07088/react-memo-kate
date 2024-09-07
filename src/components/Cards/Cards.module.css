@@ -70,7 +70,7 @@
 
   margin-bottom: -12px;
 }
-.quantityOfAttempsTtl{
+.quantityOfAttempsTtl {
   color: #fff;
   font-variant-numeric: lining-nums proportional-nums;
   font-family: StratosSkyeng;
@@ -80,37 +80,47 @@
   line-height: 32px;
 }
 
-.containerSuperPower{
-  position: relative;
-}
-.superPower{
-  position: relative;
-}
-.modalSuperPower{
-  display: none;
+.containerSuperPower {
   position: absolute;
+  left: 700px;
+  top: 48px;
+}
+.superPower {
+  position: relative;
+  weight:68px;
+  height:68px;
+}
+.modalSuperPower {
+  display: none;
+  position: relative;
   left: 0;
   top: 0;
-
-  background-color: #C2F5FF;
-  width: 222px;
-  height: 223px;
-  /* top: 340px;
-  left: 318px; */
+  background-color: #c2f5ff;
+  width: 180px;
+  height: 180px;
   border-radius: 12px;
-  //opacity: 0px;
-  font-family: Inter;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 24px;
-  text-align: center;
-  color: #004980;
-
+  box-sizing: border-box;
 }
 
 .superPower:hover + .modalSuperPower {
   display: block;
-} 
-.superPowerP{
-
+}
+.superPowerH {
+  color: #004980;
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: center;
+  padding-top: 12px;
+  padding-bottom: 8px;
+}
+.superPowerP {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: center;
+  color: #004980;
+  padding: 0px 15px 15px 15px;
 }

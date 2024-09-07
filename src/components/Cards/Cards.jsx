@@ -44,8 +44,10 @@ function getTimerValue(startDate, endDate) {
  */
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const { attempts, setAttempts, isEasyMode } = useContext(EasyContext);
+  // const [visionHelp, setVisionHelp] = useState(false);
   // В cards лежит игровое поле - массив карт и их состояние открыта\закрыта
   const [cards, setCards] = useState([]);
+  //const [opened, setOpened] = useState([]);
   // Текущий статус игры
   const [status, setStatus] = useState(STATUS_PREVIEW);
 
@@ -190,6 +192,33 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     };
   }, [gameStartDate, gameEndDate]);
 
+  // useEffect(() => {
+  //   if (easy) {
+  //     // логика установки в стейт другого массива, в котором уже не будет 1, 2, а только 2.
+  //   }
+  // }, [easy])
+
+  // const vision = () => {
+  //   if (superGame === 1) {
+  //     setVisionHelp(!visionHelp);
+  //     cards.filter(card => {
+  //       card.open = true;
+  //     });
+  //     setTimeout(() => {
+  //       setVisionHelp(!visionHelp);
+  //       cards.filter(card => {
+  //         card.open = false;
+  //         opened.filter(openedcard => {
+  //           if (openedcard.open === card.open && card.suit === openedcard.suit && openedcard.rank === card.rank) {
+  //             card.open = true;
+  //           }
+  //         });
+  //       });
+  //     }, 5000);
+  //     setSuperGame(superGame - 1);
+  //   }
+  // };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -213,13 +242,15 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </>
           )}
         </div>
-        {/* <div className={styles.containerSuperPower}>
-          <img className={styles.superPower} src={svg} alt="achives" />
-          <p className={styles.modalSuperPower}>
-            <span className={styles.superPoweP}>Прозрение</span>
-            На 5 секунд показываются все карты. Таймер длительности игры на это время останавливается.
-          </p>
-        </div> */}
+        <div className={styles.containerSuperPower}>
+          <img className={styles.superPower} src={svg} alt="achieves" />
+          <div className={styles.modalSuperPower}>
+            <h6 className={styles.superPowerH}>Прозрение</h6>
+            <p className={styles.superPowerP}>
+              На 5 секунд показываются все карты. Таймер длительности игры на это время останавливается.
+            </p>
+          </div>
+        </div>
         {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
         {isEasyMode && <span className={styles.quantityOfAttempsTtl}> Количество попыток: {attempts} </span>}
       </div>
@@ -246,13 +277,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           />
         </div>
       ) : null}
-      <div className={styles.containerSuperPower}>
-        <img className={styles.superPower} src={svg} alt="achieves" />
-        <p className={styles.modalSuperPower}>
-          <span className={styles.superPoweP}>Прозрение</span>
-          На 5 секунд показываются все карты. Таймер длительности игры на это время останавливается.
-        </p>
-      </div>
     </div>
   );
 }

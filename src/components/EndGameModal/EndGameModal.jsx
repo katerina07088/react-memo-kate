@@ -26,6 +26,7 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
   const [leader, setAddLeader] = useState({
     name: "",
     time: gameDurationMinutes.toString().padStart("2", "0") + gameDurationSeconds.toString().padStart("2", "0"),
+    achievements: [1, 2],
   });
 
   const addLeaderToList = async e => {
