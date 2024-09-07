@@ -51,10 +51,10 @@ export function LeaderBoard() {
             <div className={styles.leader} key={leader.id}>
               <div className={styles.leaderPosition}># {index + 1}</div>
               <div className={styles.leaderName}>{leader.name}</div>
-              <div>
+              <div className={styles.achieves}>
                 {playHardGame(leader) ? (
                   <div className={styles.hardGameachives}>
-                    <img src={hardGame} alt="achieves" />
+                    <img src={hardGame} alt="achieves" className={styles.hardGame} />
                     <span className={styles.hardGameP}>Игра пройдена в сложном режиме</span>
                   </div>
                 ) : (
