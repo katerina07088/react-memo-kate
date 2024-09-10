@@ -15,6 +15,7 @@ const STATUS_WON = "STATUS_WON";
 const STATUS_IN_PROGRESS = "STATUS_IN_PROGRESS";
 // Начало игры: игрок видит все карты в течении нескольких секунд
 const STATUS_PREVIEW = "STATUS_PREVIEW";
+const STATUS_PAUSE = "STATUS_PAUSE";
 
 function getTimerValue(startDate, endDate) {
   if (!startDate && !endDate) {
@@ -184,13 +185,22 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
   // Обновляем значение таймера в интервале
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setTimer(getTimerValue(gameStartDate, gameEndDate));
-    }, 300);
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [gameStartDate, gameEndDate]);
+    if (status !== STATUS_PAUSE) {
+      const intervalId = setInterval(() => {
+        setTimer(prevTimer => {
+          if (prevTimer) {
+            const minutes = prevTimer.seconds === 59 ? prevTimer.minutes + 1 : prevTimer.minutes;
+            const seconds = prevTimer.seconds === 59 ? 0 : prevTimer.seconds + 1;
+            return { minutes, seconds };
+          }
+          return prevTimer;
+        });
+      }, 1000);
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
+  }, [gameStartDate, gameEndDate, status]);
 
   // useEffect(() => {
   //   if (easy) {
@@ -218,6 +228,23 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   //     setSuperGame(superGame - 1);
   //   }
   // };
+  const vision = () => {
+    setStatus(STATUS_PAUSE);
+    const openedCards = cards.filter(card => card.open);
+    const openedAllCards = cards.map(card => ({ ...card, open: true }));
+    setCards(openedAllCards);
+    setTimeout(() => {
+      const originalCards = cards.map(card => {
+        if (openedCards.some(openedCard => openedCard.id === card.id)) {
+          return { ...card, open: true };
+        } else {
+          return { ...card, open: false };
+        }
+      });
+      setCards(originalCards);
+      setStatus(STATUS_IN_PROGRESS);
+    }, 5000);
+  };
 
   return (
     <div className={styles.container}>
@@ -243,7 +270,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           )}
         </div>
         <div className={styles.containerSuperPower}>
-          <img className={styles.superPower} src={svg} alt="achieves" />
+          <img className={styles.superPower} src={svg} alt="achieves" onClick={vision} />
           <div className={styles.modalSuperPower}>
             <h6 className={styles.superPowerH}>Прозрение</h6>
             <p className={styles.superPowerP}>

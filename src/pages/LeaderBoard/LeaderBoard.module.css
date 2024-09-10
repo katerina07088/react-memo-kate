@@ -87,19 +87,13 @@
   color: #000000;
   grid-column: span 2;
 }
-/* .noAchives {
-  display: flex;
-  gap: 6px;
-  align: left;
-  grid-column: span 3;
-}
+
 .achives {
   display: flex;
   gap: 6px;
   align: left;
   grid-column: span 3;
-  display: none;
-} */
+} 
 .hardGameAchives{
   position: absolute;
 }
