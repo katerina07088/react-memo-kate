@@ -7,11 +7,14 @@ import celebrationImageUrl from "./images/celebration.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { addLeader } from "../../api/api";
+//import { useEffect } from "react";
+//import { EasyContext } from "../../context/context";
 
-export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick }) {
+export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, vision }) {
   const { pairsCount } = useParams();
   const [error, setError] = useState();
   const nav = useNavigate();
+  //const { isEasyMode, useVision } = useContext(EasyContext);
 
   const thirdLevelPairs = 9;
   const isLeader = isWon && Number(pairsCount) === thirdLevelPairs;
@@ -37,13 +40,22 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
     }
     try {
       await addLeader({ ...leader }).then(res => {
-        setAddLeader(res.leaders);
+        //setAddLeader(res.leaders);
         nav("/leaderBoard");
       });
     } catch (error) {
       setError(error.message);
     }
   };
+
+  // useEffect(() => {
+  //   if (!isEasyMode) {
+  //     setAddLeader({ ...leader, achievements: [1] });
+  //     if (useVision === 2) {
+  //       setAddLeader({ ...leader, achievements: [2] });
+  //     }
+  //   }
+  // }, [isEasyMode, useVision, leader]);
 
   return (
     <div className={styles.modal}>

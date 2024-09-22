@@ -53,7 +53,7 @@ export function LeaderBoard() {
               <div className={styles.leaderName}>{leader.name}</div>
               <div className={styles.achieves}>
                 {playHardGame(leader) ? (
-                  <div className={styles.hardGameachives}>
+                  <div className={styles.hardGameachieves}>
                     <img src={hardGame} alt="achieves" className={styles.hardGame} />
                     <div className={styles.hardGameP}>Игра пройдена в сложном режиме</div>
                   </div>
@@ -61,34 +61,14 @@ export function LeaderBoard() {
                   <img src={noHardGame} alt="achieves" />
                 )}
                 {superGame(leader) ? (
-                  <div className={styles.superPowerachives}>
-                    <img src={superPower} alt="achieves" />
+                  <div className={styles.superPowerachieves}>
+                    <img src={superPower} alt="achieves" className={styles.superPower} />
                     <div className={styles.superPowerP}>Игра пройдена без супер-сил</div>{" "}
                   </div>
                 ) : (
                   <img src={noSuperPower} alt="achieves" />
                 )}
               </div>
-              {/* <div className={styles.achives}>
-                {leader.achievements.includes(1) ? (
-                  <div className={styles.hardGameachives}>
-                    <img src={hardGame} alt="achieves" />
-                    <span className={styles.hardGameP}>Игра пройдена в сложном режиме</span>{" "}
-                  </div>
-                ) : (
-                  <img src={noHardGame} alt="achieves" />
-                )}
-
-                {leader.achievements.includes(2) ? (
-                  <div className={styles.superPowerachives}>
-                    <img src={superPower} alt="achieves" />
-                    <span className={styles.superPowerP}>Игра пройдена без супер-сил</span>{" "}
-                  </div>
-                ) : (
-                  <img src={noSuperPower} alt="achieves" />
-                )}
-              </div> */}
-
               <div className={styles.leaderTime}>
                 {Math.floor(leader.time / 60)
                   .toString()

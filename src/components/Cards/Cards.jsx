@@ -45,10 +45,11 @@ function getTimerValue(startDate, endDate) {
  */
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const { attempts, setAttempts, isEasyMode } = useContext(EasyContext);
-  // const [visionHelp, setVisionHelp] = useState(false);
+
   // В cards лежит игровое поле - массив карт и их состояние открыта\закрыта
   const [cards, setCards] = useState([]);
   //const [opened, setOpened] = useState([]);
+
   // Текущий статус игры
   const [status, setStatus] = useState(STATUS_PREVIEW);
 
@@ -118,7 +119,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
     // Открытые карты на игровом поле
     const openCards = nextCards.filter(card => card.open);
-
     // Ищем открытые карты, у которых нет пары среди других открытых
     const openCardsWithoutPair = openCards.filter(card => {
       const sameCards = openCards.filter(openCard => card.suit === openCard.suit && card.rank === openCard.rank);
@@ -157,6 +157,24 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
   const isGameEnded = status === STATUS_LOST || status === STATUS_WON;
 
+  const vision = () => {
+    setStatus(STATUS_PAUSE);
+    const openedCards = cards.filter(card => card.open);
+    const openedAllCards = cards.map(card => ({ ...card, open: true }));
+    setCards(openedAllCards);
+    setTimeout(() => {
+      const originalCards = cards.map(card => {
+        if (openedCards.some(openedCard => openedCard.id === card.id)) {
+          return { ...card, open: true };
+        } else {
+          return { ...card, open: false };
+        }
+      });
+      setCards(originalCards);
+      setStatus(STATUS_IN_PROGRESS);
+    }, 5000);
+  };
+
   // Игровой цикл
   useEffect(() => {
     // В статусах кроме превью доп логики не требуется
@@ -183,7 +201,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     };
   }, [status, pairsCount, previewSeconds]);
 
-  // Обновляем значение таймера в интервале
+  //Обновляем значение таймера в интервале
   useEffect(() => {
     if (status !== STATUS_PAUSE) {
       const intervalId = setInterval(() => {
@@ -196,20 +214,21 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           return prevTimer;
         });
       }, 1000);
-      return () => {
-        clearInterval(intervalId);
-      };
+      return clearInterval(intervalId);
     }
   }, [gameStartDate, gameEndDate, status]);
 
   // useEffect(() => {
-  //   if (easy) {
-  //     // логика установки в стейт другого массива, в котором уже не будет 1, 2, а только 2.
-  //   }
-  // }, [easy])
+  //   const intervalId = setInterval(() => {
+  //     setTimer(getTimerValue(gameStartDate, gameEndDate));
+  //   }, 300);
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, [gameStartDate, gameEndDate]);
 
   // const vision = () => {
-  //   if (superGame === 1) {
+  //   if (useVision === 1) {
   //     setVisionHelp(!visionHelp);
   //     cards.filter(card => {
   //       card.open = true;
@@ -225,26 +244,9 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   //         });
   //       });
   //     }, 5000);
-  //     setSuperGame(superGame - 1);
+  //     setUseVision(useVision - 1);
   //   }
   // };
-  const vision = () => {
-    setStatus(STATUS_PAUSE);
-    const openedCards = cards.filter(card => card.open);
-    const openedAllCards = cards.map(card => ({ ...card, open: true }));
-    setCards(openedAllCards);
-    setTimeout(() => {
-      const originalCards = cards.map(card => {
-        if (openedCards.some(openedCard => openedCard.id === card.id)) {
-          return { ...card, open: true };
-        } else {
-          return { ...card, open: false };
-        }
-      });
-      setCards(originalCards);
-      setStatus(STATUS_IN_PROGRESS);
-    }, 5000);
-  };
 
   return (
     <div className={styles.container}>

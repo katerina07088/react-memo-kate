@@ -88,29 +88,43 @@
   grid-column: span 2;
 }
 
-.achives {
+.achieves {
   display: flex;
   gap: 6px;
   align: left;
   grid-column: span 3;
 } 
-.hardGameAchives{
-  position: absolute;
+.hardGameAchieves, .superPowerachieves{
+  //position: absolute;
 }
-.hardGame{
-  position: relative;
+.hardGame, .superPower{
+  //position: relative;
   weight:32px;
   height:32px;
 }
-.hardGameP{
+.hardGameP, .superPowerP {
   display: none;
-  position: relative;
+  //position: relative;
   background-color: #c2f5ff;
+  width: 134px;
+  height: 48px;
+  //top: 319px;
+  //left: 660px;
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: center;
+  color: #004980;
+  padding: 10px 15px 20px 15px;
+  border-radius:12px;
 }
 .hardGame:hover + .hardGameP {
   display: block;
 }
-
+.superPower:hover + .superPowerP {
+  display: block;
+}
 .button {
   width: 246px;
   height: 48px;

@@ -27,7 +27,8 @@
 
 .header {
   display: flex;
-  justify-content: space-between;
+  //justify-content: space-between;
+  gap: 36px;
   align-items: flex-end;
   margin-bottom: 35px;
 }
@@ -81,7 +82,7 @@
 }
 
 .containerSuperPower {
-  position: absolute;
+  //position: absolute;
   left: 700px;
   top: 48px;
 }

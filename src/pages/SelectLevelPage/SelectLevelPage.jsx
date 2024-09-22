@@ -9,9 +9,11 @@ export function SelectLevelPage() {
   const [selectedGame, setSelectedGame] = useState();
   const nav = useNavigate();
 
-  const startGame = () => {
+  const startAGame = () => {
     if (selectedGame !== null) {
       nav(`/game/${selectedGame}`);
+    } else {
+      nav(`/`);
     }
   };
   return (
@@ -57,7 +59,7 @@ export function SelectLevelPage() {
           </label>
         </div>
         <div>
-          <button className={styles.button} onClick={startGame}>
+          <button className={styles.button} onClick={startAGame}>
             Играть
           </button>
         </div>
