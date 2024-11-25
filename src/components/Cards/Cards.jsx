@@ -202,30 +202,30 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   }, [status, pairsCount, previewSeconds]);
 
   //Обновляем значение таймера в интервале
-  useEffect(() => {
-    if (status !== STATUS_PAUSE) {
-      const intervalId = setInterval(() => {
-        setTimer(prevTimer => {
-          if (prevTimer) {
-            const minutes = prevTimer.seconds === 59 ? prevTimer.minutes + 1 : prevTimer.minutes;
-            const seconds = prevTimer.seconds === 59 ? 0 : prevTimer.seconds + 1;
-            return { minutes, seconds };
-          }
-          return prevTimer;
-        });
-      }, 1000);
-      return clearInterval(intervalId);
-    }
-  }, [gameStartDate, gameEndDate, status]);
-
   // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     setTimer(getTimerValue(gameStartDate, gameEndDate));
-  //   }, 300);
-  //   return () => {
-  //     clearInterval(intervalId);
-  //   };
-  // }, [gameStartDate, gameEndDate]);
+  //   if (status !== STATUS_PAUSE) {
+  //     const intervalId = setInterval(() => {
+  //       setTimer(prevTimer => {
+  //         if (prevTimer) {
+  //           const minutes = prevTimer.seconds === 59 ? prevTimer.minutes + 1 : prevTimer.minutes;
+  //           const seconds = prevTimer.seconds === 59 ? 0 : prevTimer.seconds + 1;
+  //           return { minutes, seconds };
+  //         }
+  //         return prevTimer;
+  //       });
+  //     }, 1000);
+  //     return clearInterval(intervalId);
+  //   }
+  // }, [gameStartDate, gameEndDate, status]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTimer(getTimerValue(gameStartDate, gameEndDate));
+    }, 300);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [gameStartDate, gameEndDate]);
 
   // const vision = () => {
   //   if (useVision === 1) {
