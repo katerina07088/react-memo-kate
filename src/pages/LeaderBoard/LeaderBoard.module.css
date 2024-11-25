@@ -93,23 +93,26 @@
   gap: 6px;
   align: left;
   grid-column: span 3;
-} 
-.hardGameAchieves, .superPowerachieves{
-  //position: absolute;
 }
-.hardGame, .superPower{
-  //position: relative;
-  weight:32px;
-  height:32px;
+.achieves:hover .hardGameAndSuperPowerAchieves {
+  opacity: 1;
 }
-.hardGameP, .superPowerP {
+
+.hardGameAndSuperPowerAchieves {
+  transition: all 0.3s ease 0s;
+}
+.hardGame,
+.superPower {
+  weight: 32px;
+  height: 32px;
+}
+.hardGameP,
+.superPowerP {
   display: none;
-  //position: relative;
+  position: absolute;
   background-color: #c2f5ff;
   width: 134px;
   height: 48px;
-  //top: 319px;
-  //left: 660px;
   font-family: Inter;
   font-size: 18px;
   font-weight: 400;
@@ -117,7 +120,7 @@
   text-align: center;
   color: #004980;
   padding: 10px 15px 20px 15px;
-  border-radius:12px;
+  border-radius: 12px;
 }
 .hardGame:hover + .hardGameP {
   display: block;

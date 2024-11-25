@@ -1,20 +1,15 @@
 import styles from "./EndGameModal.module.css";
-
 import { Button } from "../Button/Button";
-
 import deadImageUrl from "./images/dead.png";
 import celebrationImageUrl from "./images/celebration.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { addLeader } from "../../api/api";
-//import { useEffect } from "react";
-//import { EasyContext } from "../../context/context";
 
-export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, vision }) {
+export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, isHard, isSuperPowerUsed }) {
   const { pairsCount } = useParams();
   const [error, setError] = useState();
   const nav = useNavigate();
-  //const { isEasyMode, useVision } = useContext(EasyContext);
 
   const thirdLevelPairs = 9;
   const isLeader = isWon && Number(pairsCount) === thirdLevelPairs;
@@ -26,10 +21,15 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
 
   const imgAlt = isWon ? "celebration emodji" : "dead emodji";
 
+  const achievements = [];
+
+  if (isHard) achievements.push(1);
+  if (!isSuperPowerUsed) achievements.push(2);
+
   const [leader, setAddLeader] = useState({
     name: "",
     time: gameDurationMinutes.toString().padStart("2", "0") + gameDurationSeconds.toString().padStart("2", "0"),
-    achievements: [1, 2],
+    achievements: achievements,
   });
 
   const addLeaderToList = async e => {
@@ -47,15 +47,6 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
       setError(error.message);
     }
   };
-
-  // useEffect(() => {
-  //   if (!isEasyMode) {
-  //     setAddLeader({ ...leader, achievements: [1] });
-  //     if (useVision === 2) {
-  //       setAddLeader({ ...leader, achievements: [2] });
-  //     }
-  //   }
-  // }, [isEasyMode, useVision, leader]);
 
   return (
     <div className={styles.modal}>

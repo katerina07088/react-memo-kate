@@ -82,30 +82,39 @@
 }
 
 .containerSuperPower {
-  //position: absolute;
   left: 700px;
   top: 48px;
 }
+
+.containerSuperPower[disabled] {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.containerSuperPower:hover .modalSuperPower {
+  opacity: 1;
+}
 .superPower {
   position: relative;
-  weight:68px;
-  height:68px;
+  weight: 68px;
+  height: 68px;
 }
 .modalSuperPower {
-  display: none;
-  position: relative;
-  left: 0;
-  top: 0;
+  opacity: 0;
+  transition: all 0.3s ease 0s;
+  position: absolute;
+  z-index: 1;
   background-color: #c2f5ff;
-  width: 180px;
-  height: 180px;
+  width: 160px;
+  height: 120px;
   border-radius: 12px;
   box-sizing: border-box;
 }
 
-.superPower:hover + .modalSuperPower {
-  display: block;
+.modalSuperPower {
+  pointer-events: none;
 }
+
 .superPowerH {
   color: #004980;
   font-family: Inter;

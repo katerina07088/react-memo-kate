@@ -6,7 +6,7 @@ import { EndGameModal } from "../../components/EndGameModal/EndGameModal";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
 import { EasyContext } from "../../context/context";
-import svg from "../../img/achiv.png";
+import svg from "../../img/achiev.png";
 
 // Игра закончилась
 const STATUS_LOST = "STATUS_LOST";
@@ -15,7 +15,6 @@ const STATUS_WON = "STATUS_WON";
 const STATUS_IN_PROGRESS = "STATUS_IN_PROGRESS";
 // Начало игры: игрок видит все карты в течении нескольких секунд
 const STATUS_PREVIEW = "STATUS_PREVIEW";
-const STATUS_PAUSE = "STATUS_PAUSE";
 
 function getTimerValue(startDate, endDate) {
   if (!startDate && !endDate) {
@@ -57,6 +56,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const [gameStartDate, setGameStartDate] = useState(null);
   // Дата конца игры
   const [gameEndDate, setGameEndDate] = useState(null);
+
+  const [alohomoraUsed, setAlohomoraUsed] = useState(false);
 
   // Стейт для таймера, высчитывается в setInteval на основе gameStartDate и gameEndDate
   const [timer, setTimer] = useState({
@@ -157,24 +158,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
   const isGameEnded = status === STATUS_LOST || status === STATUS_WON;
 
-  const vision = () => {
-    setStatus(STATUS_PAUSE);
-    const openedCards = cards.filter(card => card.open);
-    const openedAllCards = cards.map(card => ({ ...card, open: true }));
-    setCards(openedAllCards);
-    setTimeout(() => {
-      const originalCards = cards.map(card => {
-        if (openedCards.some(openedCard => openedCard.id === card.id)) {
-          return { ...card, open: true };
-        } else {
-          return { ...card, open: false };
-        }
-      });
-      setCards(originalCards);
-      setStatus(STATUS_IN_PROGRESS);
-    }, 5000);
-  };
-
   // Игровой цикл
   useEffect(() => {
     // В статусах кроме превью доп логики не требуется
@@ -201,23 +184,38 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     };
   }, [status, pairsCount, previewSeconds]);
 
-  //Обновляем значение таймера в интервале
-  // useEffect(() => {
-  //   if (status !== STATUS_PAUSE) {
-  //     const intervalId = setInterval(() => {
-  //       setTimer(prevTimer => {
-  //         if (prevTimer) {
-  //           const minutes = prevTimer.seconds === 59 ? prevTimer.minutes + 1 : prevTimer.minutes;
-  //           const seconds = prevTimer.seconds === 59 ? 0 : prevTimer.seconds + 1;
-  //           return { minutes, seconds };
-  //         }
-  //         return prevTimer;
-  //       });
-  //     }, 1000);
-  //     return clearInterval(intervalId);
-  //   }
-  // }, [gameStartDate, gameEndDate, status]);
+  function isPair(card1, card2) {
+    return card1.suit === card2.suit && card1.rank === card2.rank;
+  }
+  const alahomora = () => {
+    if (alohomoraUsed) return;
+    setAlohomoraUsed(true);
 
+    const firstCard = cards.find(card => !card.open);
+    const firstCardIndex = cards.indexOf(firstCard);
+
+    if (!firstCard) return;
+
+    const secondCard = cards.slice(firstCardIndex + 1).find(card => isPair(firstCard, card));
+    const secondCardIndex = cards.indexOf(secondCard);
+
+    if (!secondCard) return;
+
+    const copy = [...cards];
+
+    copy[firstCardIndex].open = true;
+    copy[secondCardIndex].open = true;
+
+    setCards(copy);
+
+    const isPlayerWon = copy.every(card => card.open);
+
+    if (isPlayerWon) {
+      finishGame(STATUS_WON);
+    }
+  };
+
+  //Обновляем значение таймера в интервале
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTimer(getTimerValue(gameStartDate, gameEndDate));
@@ -226,27 +224,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       clearInterval(intervalId);
     };
   }, [gameStartDate, gameEndDate]);
-
-  // const vision = () => {
-  //   if (useVision === 1) {
-  //     setVisionHelp(!visionHelp);
-  //     cards.filter(card => {
-  //       card.open = true;
-  //     });
-  //     setTimeout(() => {
-  //       setVisionHelp(!visionHelp);
-  //       cards.filter(card => {
-  //         card.open = false;
-  //         opened.filter(openedcard => {
-  //           if (openedcard.open === card.open && card.suit === openedcard.suit && openedcard.rank === card.rank) {
-  //             card.open = true;
-  //           }
-  //         });
-  //       });
-  //     }, 5000);
-  //     setUseVision(useVision - 1);
-  //   }
-  // };
 
   return (
     <div className={styles.container}>
@@ -271,13 +248,15 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </>
           )}
         </div>
-        <div className={styles.containerSuperPower}>
-          <img className={styles.superPower} src={svg} alt="achieves" onClick={vision} />
+        <div
+          className={styles.containerSuperPower}
+          disabled={alohomoraUsed || status === STATUS_PREVIEW}
+          onClick={alahomora}
+        >
+          <img className={styles.superPower} src={svg} alt="achieves" />
           <div className={styles.modalSuperPower}>
-            <h6 className={styles.superPowerH}>Прозрение</h6>
-            <p className={styles.superPowerP}>
-              На 5 секунд показываются все карты. Таймер длительности игры на это время останавливается.
-            </p>
+            <h6 className={styles.superPowerH}>Алохомора</h6>
+            <p className={styles.superPowerP}>Открывается случайная пара карт.</p>
           </div>
         </div>
         {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
@@ -299,6 +278,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       {isGameEnded ? (
         <div className={styles.modalContainer}>
           <EndGameModal
+            isSuperPowerUsed={alohomoraUsed}
+            isHard={pairsCount === 9}
             isWon={status === STATUS_WON}
             gameDurationSeconds={timer.seconds}
             gameDurationMinutes={timer.minutes}

@@ -53,7 +53,7 @@ export function LeaderBoard() {
               <div className={styles.leaderName}>{leader.name}</div>
               <div className={styles.achieves}>
                 {playHardGame(leader) ? (
-                  <div className={styles.hardGameachieves}>
+                  <div className={styles.hardGameAndSuperPowerAchieves}>
                     <img src={hardGame} alt="achieves" className={styles.hardGame} />
                     <div className={styles.hardGameP}>Игра пройдена в сложном режиме</div>
                   </div>
@@ -61,7 +61,7 @@ export function LeaderBoard() {
                   <img src={noHardGame} alt="achieves" />
                 )}
                 {superGame(leader) ? (
-                  <div className={styles.superPowerachieves}>
+                  <div className={styles.hardGameAndSuperPowerAchieves}>
                     <img src={superPower} alt="achieves" className={styles.superPower} />
                     <div className={styles.superPowerP}>Игра пройдена без супер-сил</div>{" "}
                   </div>
