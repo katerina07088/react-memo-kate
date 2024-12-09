@@ -132,29 +132,23 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     });
 
     // Игровое поле после открытия кликнутой карты
-    const playerLost = openCardsWithoutPair.length >= 2;
+    const hasIncorrect = openCardsWithoutPair.length >= 2;
+    if (!hasIncorrect) return;
 
-    if (isEasyMode && playerLost) {
-      setAttempts(attempts - 1);
-      if (openCardsWithoutPair) {
-        openCardsWithoutPair.map(card => {
-          return (card.open = false);
-        });
-        console.log(openCardsWithoutPair);
-      }
-      if (attempts === 1) {
-        finishGame(STATUS_LOST);
-      }
-    }
+    setTimeout(() => {
+      openCardsWithoutPair.forEach(card => {
+        card.open = false;
+      });
+    }, 1000);
 
-    // "Игрок проиграл", т.к на поле есть две открытые карты без пары
-    if (playerLost && !isEasyMode) {
-      finishGame(STATUS_LOST);
-      return;
-    }
-
-    // ... игра продолжается
+    setAttempts(attempts - 1);
   };
+
+  useEffect(() => {
+    if (attempts === 0) {
+      finishGame(STATUS_LOST);
+    }
+  }, [attempts]);
 
   const isGameEnded = status === STATUS_LOST || status === STATUS_WON;
 
