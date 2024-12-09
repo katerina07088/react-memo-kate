@@ -1,14 +1,12 @@
 import styles from "./EndGameModal.module.css";
-
 import { Button } from "../Button/Button";
-
 import deadImageUrl from "./images/dead.png";
 import celebrationImageUrl from "./images/celebration.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { addLeader } from "../../api/api";
 
-export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick }) {
+export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, isHard, isSuperPowerUsed }) {
   const { pairsCount } = useParams();
   const [error, setError] = useState();
   const nav = useNavigate();
@@ -17,15 +15,19 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
   const isLeader = isWon && Number(pairsCount) === thirdLevelPairs;
   const title = isLeader ? "Вы попали на лидерборд!" : isWon ? "Вы выйграли!" : "Вы проиграли!";
 
-  //const title = isWon ? "Вы выйграли!" : "Вы проиграли!";
-
   const imgSrc = isWon ? celebrationImageUrl : deadImageUrl;
 
   const imgAlt = isWon ? "celebration emodji" : "dead emodji";
 
+  const achievements = [];
+
+  if (isHard) achievements.push(1);
+  if (!isSuperPowerUsed) achievements.push(2);
+
   const [leader, setAddLeader] = useState({
     name: "",
     time: gameDurationMinutes.toString().padStart("2", "0") + gameDurationSeconds.toString().padStart("2", "0"),
+    achievements: achievements,
   });
 
   const addLeaderToList = async e => {
@@ -35,8 +37,8 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
       return;
     }
     try {
-      await addLeader().then(res => {
-        setAddLeader(res.leaders);
+      await addLeader({ ...leader }).then(res => {
+        //setAddLeader(res.leaders);
         nav("/leaderBoard");
       });
     } catch (error) {

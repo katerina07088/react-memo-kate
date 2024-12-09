@@ -3,6 +3,10 @@ import styles from "./LeaderBoard.module.css";
 import { getListOfLeaders } from "../../api/api";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import hardGame from "../../img/hardGame.png";
+import noHardGame from "../../img/noHardGame.png";
+import superPower from "../../img/superPower.png";
+import noSuperPower from "../../img/noSuperPower.png";
 
 export function LeaderBoard() {
   const [error, setError] = useState("");
@@ -18,6 +22,16 @@ export function LeaderBoard() {
       });
   }, []);
 
+  function playHardGame(leader) {
+    if (leader.achievements.includes(1)) {
+      return true;
+    }
+  }
+  function superGame(leader) {
+    if (leader.achievements.includes(2)) {
+      return true;
+    }
+  }
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -27,24 +41,43 @@ export function LeaderBoard() {
         </Link>
       </div>
       <div className={styles.leadersList}>
-        <ul className={styles.leaders}>
-          <li className={styles.leader}>
+        <div className={styles.leaders}>
+          <div className={styles.leaderTitle}>
             <div className={styles.leaderPTtl}>Позиция</div> <div className={styles.leaderPTtl}>Пользователь</div>
+            <div className={styles.leaderPTtl}>Достижения</div>
             <div className={styles.leaderPTtl}>Время</div>
-          </li>
-          {leaders.map(leader => (
-            <li className={styles.leader} key={leader.id}>
-              <div className={styles.leaderP}>{leader.id}</div>
-              <div className={styles.leaderP}>{leader.name}</div>
-              <div className={styles.leaderP}>
+          </div>
+          {leaders.map((leader, index) => (
+            <div className={styles.leader} key={leader.id}>
+              <div className={styles.leaderPosition}># {index + 1}</div>
+              <div className={styles.leaderName}>{leader.name}</div>
+              <div className={styles.achieves}>
+                {playHardGame(leader) ? (
+                  <div className={styles.hardGameAndSuperPowerAchieves}>
+                    <img src={hardGame} alt="achieves" className={styles.hardGame} />
+                    <div className={styles.hardGameP}>Игра пройдена в сложном режиме</div>
+                  </div>
+                ) : (
+                  <img src={noHardGame} alt="achieves" />
+                )}
+                {superGame(leader) ? (
+                  <div className={styles.hardGameAndSuperPowerAchieves}>
+                    <img src={superPower} alt="achieves" className={styles.superPower} />
+                    <div className={styles.superPowerP}>Игра пройдена без супер-сил</div>{" "}
+                  </div>
+                ) : (
+                  <img src={noSuperPower} alt="achieves" />
+                )}
+              </div>
+              <div className={styles.leaderTime}>
                 {Math.floor(leader.time / 60)
                   .toString()
                   .padStart("2", "0")}
                 :{leader.time - Math.floor(leader.time / 60) * (60).toString().padStart("2", "0")}
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
         {error && <p> {error}</p>}
       </div>
     </div>

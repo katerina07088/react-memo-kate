@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./SelectLevelPage.module.css";
 import { useContext } from "react";
 import { EasyContext } from "../../context/context";
@@ -6,19 +6,28 @@ import { useState } from "react";
 
 export function SelectLevelPage() {
   const { isEasyMode, setEasyMode } = useContext(EasyContext);
-  const [selectedLevel, setSelectedLevel] = useState();
+  const [selectedGame, setSelectedGame] = useState();
+  const nav = useNavigate();
+
+  const startAGame = () => {
+    if (selectedGame !== null) {
+      nav(`/game/${selectedGame}`);
+    } else {
+      nav(`/`);
+    }
+  };
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
         <h1 className={styles.title}>Выбери сложность</h1>
         <ul className={styles.levels}>
-          {[3, 6, 9].map(level => (
+          {[3, 6, 9].map(game => (
             <li
-              key={level}
-              className={`${styles.level} ${selectedLevel === level ? styles.selected : ""}`}
-              onClick={() => setSelectedLevel(level)}
+              key={game}
+              className={`${styles.level} ${selectedGame === game ? styles.selectedLevel : ""}`}
+              onClick={() => setSelectedGame(game)}
             >
-              {level / 3}
+              {game / 3}
             </li>
           ))}
           {/* <li className={styles.level}>
@@ -50,7 +59,9 @@ export function SelectLevelPage() {
           </label>
         </div>
         <div>
-          <button className={styles.button}>Играть</button>
+          <button className={styles.button} onClick={startAGame}>
+            Играть
+          </button>
         </div>
         <Link to="/leaderboard">
           <div className={styles.leaderBoardLink}>Перейти к лидерборду</div>

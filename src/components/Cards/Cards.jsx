@@ -6,6 +6,7 @@ import { EndGameModal } from "../../components/EndGameModal/EndGameModal";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
 import { EasyContext } from "../../context/context";
+import svg from "../../img/achiev.png";
 
 // Игра закончилась
 const STATUS_LOST = "STATUS_LOST";
@@ -43,8 +44,11 @@ function getTimerValue(startDate, endDate) {
  */
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const { attempts, setAttempts, isEasyMode } = useContext(EasyContext);
+
   // В cards лежит игровое поле - массив карт и их состояние открыта\закрыта
   const [cards, setCards] = useState([]);
+  //const [opened, setOpened] = useState([]);
+
   // Текущий статус игры
   const [status, setStatus] = useState(STATUS_PREVIEW);
 
@@ -52,6 +56,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const [gameStartDate, setGameStartDate] = useState(null);
   // Дата конца игры
   const [gameEndDate, setGameEndDate] = useState(null);
+
+  const [alohomoraUsed, setAlohomoraUsed] = useState(false);
 
   // Стейт для таймера, высчитывается в setInteval на основе gameStartDate и gameEndDate
   const [timer, setTimer] = useState({
@@ -114,7 +120,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
     // Открытые карты на игровом поле
     const openCards = nextCards.filter(card => card.open);
-
     // Ищем открытые карты, у которых нет пары среди других открытых
     const openCardsWithoutPair = openCards.filter(card => {
       const sameCards = openCards.filter(openCard => card.suit === openCard.suit && card.rank === openCard.rank);
@@ -127,29 +132,23 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     });
 
     // Игровое поле после открытия кликнутой карты
-    const playerLost = openCardsWithoutPair.length >= 2;
+    const hasIncorrect = openCardsWithoutPair.length >= 2;
+    if (!hasIncorrect) return;
 
-    if (isEasyMode && playerLost) {
-      setAttempts(attempts - 1);
-      if (openCardsWithoutPair) {
-        openCardsWithoutPair.map(card => {
-          return (card.open = false);
-        });
-        console.log(openCardsWithoutPair);
-      }
-      if (attempts === 1) {
-        finishGame(STATUS_LOST);
-      }
-    }
+    setTimeout(() => {
+      openCardsWithoutPair.forEach(card => {
+        card.open = false;
+      });
+    }, 1000);
 
-    // "Игрок проиграл", т.к на поле есть две открытые карты без пары
-    if (playerLost && !isEasyMode) {
-      finishGame(STATUS_LOST);
-      return;
-    }
-
-    // ... игра продолжается
+    setAttempts(attempts - 1);
   };
+
+  useEffect(() => {
+    if (attempts === 0) {
+      finishGame(STATUS_LOST);
+    }
+  }, [attempts]);
 
   const isGameEnded = status === STATUS_LOST || status === STATUS_WON;
 
@@ -179,7 +178,38 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     };
   }, [status, pairsCount, previewSeconds]);
 
-  // Обновляем значение таймера в интервале
+  function isPair(card1, card2) {
+    return card1.suit === card2.suit && card1.rank === card2.rank;
+  }
+  const alahomora = () => {
+    if (alohomoraUsed) return;
+    setAlohomoraUsed(true);
+
+    const firstCard = cards.find(card => !card.open);
+    const firstCardIndex = cards.indexOf(firstCard);
+
+    if (!firstCard) return;
+
+    const secondCard = cards.slice(firstCardIndex + 1).find(card => isPair(firstCard, card));
+    const secondCardIndex = cards.indexOf(secondCard);
+
+    if (!secondCard) return;
+
+    const copy = [...cards];
+
+    copy[firstCardIndex].open = true;
+    copy[secondCardIndex].open = true;
+
+    setCards(copy);
+
+    const isPlayerWon = copy.every(card => card.open);
+
+    if (isPlayerWon) {
+      finishGame(STATUS_WON);
+    }
+  };
+
+  //Обновляем значение таймера в интервале
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTimer(getTimerValue(gameStartDate, gameEndDate));
@@ -212,6 +242,17 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </>
           )}
         </div>
+        <div
+          className={styles.containerSuperPower}
+          disabled={alohomoraUsed || status === STATUS_PREVIEW}
+          onClick={alahomora}
+        >
+          <img className={styles.superPower} src={svg} alt="achieves" />
+          <div className={styles.modalSuperPower}>
+            <h6 className={styles.superPowerH}>Алохомора</h6>
+            <p className={styles.superPowerP}>Открывается случайная пара карт.</p>
+          </div>
+        </div>
         {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
         {isEasyMode && <span className={styles.quantityOfAttempsTtl}> Количество попыток: {attempts} </span>}
       </div>
@@ -231,6 +272,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       {isGameEnded ? (
         <div className={styles.modalContainer}>
           <EndGameModal
+            isSuperPowerUsed={alohomoraUsed}
+            isHard={pairsCount === 9}
             isWon={status === STATUS_WON}
             gameDurationSeconds={timer.seconds}
             gameDurationMinutes={timer.minutes}

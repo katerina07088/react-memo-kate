@@ -29,23 +29,27 @@
   flex-direction: column;
   gap: 16px;
 }
-.leader {
-  display: flex;
-  justify-content: space-between;
-  width: 944px;
-  height: 64px;
-  //height: 64px;
-  /* top: 379px;
-      left: 40px;
-      gap: 0px; */
+
+.leaderTitle {
+  display: grid;
+  grid-template-columns: 17% 41% 24% 16%;
+  align-items: center;
+  background-color: #ffffff;
   border-radius: 12px;
-  //opacity: 0px;
-  background: #ffffff;
+  padding: 16px 20px;
+  box-sizing: border-box;
+}
+.leader {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 12px;
   padding: 16px 20px;
   box-sizing: border-box;
 }
 .leaderPTtl {
-  font-family: Poppins;
+  font-family: Arial;
   font-size: 24px;
   font-weight: 400;
   line-height: 32px;
@@ -53,15 +57,76 @@
   color: #999999;
   padding-right: 30px;
 }
-.leaderP {
+.leaderPosition {
   padding-right: 30px;
   text-align: left;
-  font-family: Poppins;
+  font-family: Arial;
   font-size: 24px;
   font-weight: 400;
   line-height: 32px;
-  text-align: left;
   color: #000000;
+  grid-column: span 2;
+}
+.leaderName {
+  padding-right: 30px;
+  text-align: left;
+  font-family: Arial;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  color: #000000;
+  grid-column: span 5;
+}
+.leaderTime {
+  padding-right: 30px;
+  text-align: left;
+  font-family: Arial;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  color: #000000;
+  grid-column: span 2;
+}
+
+.achieves {
+  display: flex;
+  gap: 6px;
+  align: left;
+  grid-column: span 3;
+}
+.achieves:hover .hardGameAndSuperPowerAchieves {
+  opacity: 1;
+}
+
+.hardGameAndSuperPowerAchieves {
+  transition: all 0.3s ease 0s;
+}
+.hardGame,
+.superPower {
+  weight: 32px;
+  height: 32px;
+}
+.hardGameP,
+.superPowerP {
+  display: none;
+  position: absolute;
+  background-color: #c2f5ff;
+  width: 134px;
+  height: 48px;
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: center;
+  color: #004980;
+  padding: 10px 15px 20px 15px;
+  border-radius: 12px;
+}
+.hardGame:hover + .hardGameP {
+  display: block;
+}
+.superPower:hover + .superPowerP {
+  display: block;
 }
 .button {
   width: 246px;
@@ -80,9 +145,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 32px; /* 133.333% */
-
   border: none;
-
   cursor: pointer;
 }
 

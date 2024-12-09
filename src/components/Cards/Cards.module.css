@@ -27,7 +27,8 @@
 
 .header {
   display: flex;
-  justify-content: space-between;
+  //justify-content: space-between;
+  gap: 36px;
   align-items: flex-end;
   margin-bottom: 35px;
 }
@@ -70,7 +71,7 @@
 
   margin-bottom: -12px;
 }
-.quantityOfAttempsTtl{
+.quantityOfAttempsTtl {
   color: #fff;
   font-variant-numeric: lining-nums proportional-nums;
   font-family: StratosSkyeng;
@@ -78,4 +79,58 @@
   font-style: normal;
   font-weight: 400;
   line-height: 32px;
+}
+
+.containerSuperPower {
+  left: 700px;
+  top: 48px;
+}
+
+.containerSuperPower[disabled] {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.containerSuperPower:hover .modalSuperPower {
+  opacity: 1;
+}
+.superPower {
+  position: relative;
+  weight: 68px;
+  height: 68px;
+}
+.modalSuperPower {
+  opacity: 0;
+  transition: all 0.3s ease 0s;
+  position: absolute;
+  z-index: 1;
+  background-color: #c2f5ff;
+  width: 160px;
+  height: 120px;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.modalSuperPower {
+  pointer-events: none;
+}
+
+.superPowerH {
+  color: #004980;
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: center;
+  padding-top: 12px;
+  padding-bottom: 8px;
+}
+.superPowerP {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: center;
+  color: #004980;
+  padding: 0px 15px 15px 15px;
 }
